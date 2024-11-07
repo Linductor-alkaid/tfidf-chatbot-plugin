@@ -6,13 +6,25 @@ from datetime import datetime
 MESSAGE_PATH = "data/message.json"
 IMAGE_PATH = "data/image.json"
 
-# 加载数据函数
+def initialize_files():
+    """初始化 JSON 文件，如果文件不存在则创建空文件"""
+    if not os.path.exists("data"):
+        os.makedirs("data")
+        
+    if not os.path.exists(MESSAGE_PATH):
+        with open(MESSAGE_PATH, 'w', encoding='utf-8') as f:
+            json.dump({}, f, ensure_ascii=False, indent=4)
+            
+    if not os.path.exists(IMAGE_PATH):
+        with open(IMAGE_PATH, 'w', encoding='utf-8') as f:
+            json.dump({}, f, ensure_ascii=False, indent=4)
+
 def load_data(file_path):
-    """加载 JSON 文件数据"""
-    if os.path.exists(file_path):
-        with open(file_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return {}
+    """加载 JSON 文件数据，如果文件不存在则创建一个空文件并返回空数据"""
+    if not os.path.exists(file_path):
+        initialize_files()
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 def save_data(data, file_path):
     """保存数据到 JSON 文件"""
@@ -91,6 +103,9 @@ def process_message_content(message):
 # 调用时示例
 def handle_new_message(group_id, user_id, message_type, content):
     """处理新消息并存储到文件中"""
+    # 确保文件已初始化
+    initialize_files()
+
     # 创建消息字典
     message = {
         "type": message_type,
