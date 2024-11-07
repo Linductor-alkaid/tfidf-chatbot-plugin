@@ -4,8 +4,8 @@ import math
 from collections import defaultdict
 
 # 文件路径
-MESSAGE_PATH = "data/message.json"
-TFIDF_PATH = "data/tfidf.json"
+MESSAGE_PATH = "../data/message.json"
+TFIDF_PATH = "../data/tfidf.json"
 
 def load_messages():
     """加载 message.json 中的消息数据"""

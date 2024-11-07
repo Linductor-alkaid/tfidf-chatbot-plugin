@@ -33,8 +33,8 @@ def parse_message_content(event):
             return "文本", segment.data["text"]
 
         elif segment.type == "image":
-            # 若为图片类型，获取图片 URL 或文件路径
-            image_path = segment.data.get("url", "path/to/local/image.jpg")  # 替换为实际的文件存储路径
+            # 获取图片 URL 或路径
+            image_path = segment.data.get("url", segment.data.get("file"))  # 优先使用 URL 或本地路径
             return "图片", image_path
 
     # 如果是其他类型，如语音消息，不处理

@@ -3,28 +3,34 @@ import os
 from datetime import datetime
 
 # 文件路径
-MESSAGE_PATH = "data/message.json"
-IMAGE_PATH = "data/image.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "../data")
+MESSAGE_PATH = os.path.join(DATA_DIR, "message.json")
+IMAGE_PATH = os.path.join(DATA_DIR, "image.json")
 
 def initialize_files():
-    """初始化 JSON 文件，如果文件不存在则创建空文件"""
-    if not os.path.exists("data"):
-        os.makedirs("data")
+    """初始化 JSON 文件，如果文件不存在则创建包含空对象的文件"""
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
         
     if not os.path.exists(MESSAGE_PATH):
         with open(MESSAGE_PATH, 'w', encoding='utf-8') as f:
-            json.dump({}, f, ensure_ascii=False, indent=4)
+            json.dump({}, f, ensure_ascii=False, indent=4)  # 初始化为空 JSON 对象
             
     if not os.path.exists(IMAGE_PATH):
         with open(IMAGE_PATH, 'w', encoding='utf-8') as f:
-            json.dump({}, f, ensure_ascii=False, indent=4)
+            json.dump({}, f, ensure_ascii=False, indent=4)  # 初始化为空 JSON 对象
 
 def load_data(file_path):
     """加载 JSON 文件数据，如果文件不存在则创建一个空文件并返回空数据"""
     if not os.path.exists(file_path):
         initialize_files()
     with open(file_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            # 如果文件内容为空或格式错误，返回一个空字典
+            return {}
 
 def save_data(data, file_path):
     """保存数据到 JSON 文件"""

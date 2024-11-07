@@ -4,8 +4,8 @@ from ..utils.tfidf import calculate_tfidf  # 需要确保 tfidf 计算已经完�
 from ..utils.storage import load_data
 
 # 文件路径
-TFIDF_PATH = "data/tfidf.json"
-MESSAGE_PATH = "data/message.json"
+TFIDF_PATH = "../data/tfidf.json"
+MESSAGE_PATH = "../data/message.json"
 
 # 机器人状态
 is_speaking = False
