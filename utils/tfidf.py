@@ -1,11 +1,14 @@
 import jieba
 import json
 import math
+import os
 from collections import defaultdict
 
-# 文件路径
-MESSAGE_PATH = "../data/message.json"
-TFIDF_PATH = "../data/tfidf.json"
+# 定义基础路径
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "../data")
+MESSAGE_PATH = os.path.join(DATA_DIR, "message.json")
+TFIDF_PATH = os.path.join(DATA_DIR, "tfidf.json")
 
 def load_messages():
     """加载 message.json 中的消息数据"""
